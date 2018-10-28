@@ -93,6 +93,43 @@ document.getElementById("login").addEventListener("click", function(){
 				}
 			}
 		})
+
+	}
+	follow();
+	unfollw();
+	function follow(){
+		document.getElementById('go').addEventListener('click',function(){
+			var named = document.getElementById('fol').value;
+			fetch(url+'/user/follow?username='+named,{
+				method: 'PUT',
+				headers: {
+					Authorization: "token "+window.localStorage.getItem('AUTH_KEY'),
+					'Content-Type': 'application/json'
+				}
+			})
+			.then(response=>response.json())
+			.then(function(data){
+				//console.log(data);
+				alert(data.message);
+			})
+		})
+	}
+	function unfollw(){
+		document.getElementById('del').addEventListener('click',function(){
+			var named = document.getElementById('fol').value;
+			fetch(url+'/user/unfollow?username='+named,{
+				method: 'PUT',
+				headers: {
+					Authorization: "token "+window.localStorage.getItem('AUTH_KEY'),
+					'Content-Type': 'application/json'
+				}
+			})
+			.then(response=>response.json())
+			.then(function(data){
+				console.log(data);
+				alert(data.message);
+			})
+		})
 	}
 	// var wrapTop =document.getElementById('scrollWrap')
 	// console.log(wrapTop.scrollTop + " " + "滚动条当前的位置")
@@ -203,7 +240,7 @@ function getfeed(){
 			var bdd = createElement("button","show likes", {id:`show_${i.id}`,style:`display:block`});
 			var bde = createElement("button","hide likes", {id:`hide_${i.id}`,style:`display:none`});
 
-			var bddw = createElement("p",i.meta.likes,{id:`show${i.id}`, style:`display:none;`});
+			var bddw = createElement("p","showname:",{id:`show${i.id}`, style:`display:none;`});
 			//var bdd_id = "show_"+i.id;
 			var bddl = createElement("button","like",{id:`like${i.id}`,style:`display:block;`});
 			var bddu = createElement("button","unlike",{id:`unlike${i.id}`,style:`display:none;`});
@@ -214,7 +251,7 @@ function getfeed(){
 			var bfg = createElement("button","hide comments",{id:`hidec_${i.id}`,style:`display:none;`});
 			//comments sytle unknown right now
 
-			var bffw = createElement("div","showall",{id:`showc${i.id}`,style:`display:none;`});
+			var bffw = createElement("div","showall:",{id:`showc${i.id}`,style:`display:none;`});
 
 			//console.log(i);
 			function dealwithcom(data,i){
@@ -226,6 +263,29 @@ function getfeed(){
 					var l = document.getElementById("showc"+i.id);
 					l.appendChild(k);
 				}	
+			}
+			function dealwithlike(data,i,bddw){
+				//console.log(data);
+				if(data.length>0){
+					for(const ij of data){
+						fetch(url+'/user/?id='+ij,{
+							method: 'GET',
+							headers: {
+								Authorization: "token "+window.localStorage.getItem('AUTH_KEY'),
+								'Content-Type': 'application/json'
+							}
+						})
+						.then(response=>response.json())
+						.then(function(data){
+							//console.log(data.name);
+							var nameorz = "name: "+data.name;
+							var sss = createElement('li',nameorz);
+							//console.log(sss);
+							//console.log(document.getElementById("show"+i.id));
+							bddw.appendChild(sss);
+						})
+					}
+				}
 			}
 
 
@@ -255,6 +315,8 @@ function getfeed(){
 
 			a.appendChild(bc);
 			dealwithcom(i.comments,i);
+			//console.log(bddw);
+			dealwithlike(i.meta.likes,i,bddw);
 
 			document.getElementById("show_"+i.id).addEventListener("click", function(){
 				document.getElementById("show"+i.id).style.display="block";
@@ -311,6 +373,7 @@ function getfeed(){
 					alert("No longer like it");
 				})
 			})
+
 			//show comments
 			document.getElementById("showc_"+i.id).addEventListener('click',function(){
 				document.getElementById("showc"+i.id).style.display = 'block';
@@ -349,6 +412,7 @@ function getfeed(){
 					}
 				})
 			})
+
 		}
 		//a.appendChild(b);
 	});
