@@ -40,8 +40,8 @@ export function createPostTile(post) {
     section.appendChild(createElement('h2', post.meta.author, { class: 'post-title' }));
 
     section.appendChild(createElement('img', null, 
-        { src: '/images/'+post.src, alt: post.meta.description_text, class: 'post-image' }));
-
+        //{ src: '/images/'+post.src, alt: post.meta.description_text, class: 'post-image' }));
+        { src: 'data:/image/png;base64,'+post.src, alt: post.meta.description_text, class: 'post-image' }));
     return section;
 }
 
@@ -58,7 +58,7 @@ export function uploadImage(event) {
     
     // if we get here we have a valid image
     const reader = new FileReader();
-    
+    //console.log(reader.result);
     reader.onload = (e) => {
         // do something with the data result
         const dataURL = e.target.result;
@@ -68,8 +68,42 @@ export function uploadImage(event) {
 
     // this returns a base64 image
     reader.readAsDataURL(file);
+    //console.log(reader.readAsDataURL(file));
+    uploadfile(reader);
 }
 
+function uploadfile(up_file){
+    //var up_file = new FileReader();
+    const url = 'http://localhost:5000';
+    //var doc = document.getElementsByTagName("nav-itemc").value;
+    document.getElementById('upload').addEventListener('click',function(){
+        if(up_file.result){
+            var doc = document.getElementById("upc").value;
+            //console.log(doc);
+            //console.log(window.localStorage.getItem('AUTH_KEY'));
+            var sr = (up_file.result.split(","))[1];
+            fetch(url+"/post/",{
+                method: 'POST',
+                body: JSON.stringify({
+                    description_text: doc,
+                    src: sr
+                }),
+                headers: {
+                    'Authorization': "Token "+window.localStorage.getItem('AUTH_KEY'),
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response=>response.json())
+            .then(function(data){
+                if(data.post_id){
+                    alert('Succeed!');
+                }
+            })
+        }else{
+            alert("please input file!");
+        }
+    })
+}
 /* 
     Reminder about localStorage
     window.localStorage.setItem('AUTH_KEY', someKey);

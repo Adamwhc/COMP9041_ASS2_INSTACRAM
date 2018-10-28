@@ -1,1 +1,4 @@
-13/10/18     18:00   18:15   put the first real entry in diary.txt (delete this line!)
+23/10/18-25/10/18    nearly all days to learn and revise the js and the recordings and finished lv0 and part of lv1
+26/10/18-28/10/18    do the things lv1 needs and finished it and find some problems when doing lv2, nearly finish lv2
+					 some need to interact with lv3, but quite confused and try to find some solutions for the problem
+28/10/18             know few about push to gitlab, orz

@@ -92,3 +92,12 @@ footer {
 }
 
 /* Add your styles here */
+.comment{
+    width:700px;
+    height: 100px;
+    margin:0 auto;
+    display:block;
+}
+.btn{
+    float: right;
+}

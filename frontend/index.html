@@ -14,20 +14,63 @@
     <!-- This is an example app structure --> 
     <header class='banner'>
         <h1>Instacram</h1>
-        <ul class='nav'>
-            <li class="nav-item"><input type="file"/></li>
-            <li class='nav-item'>Icon</li>
-            <li class='nav-item'>Icon</li>
-        </ul>
+        <div id="navid" style="display: none;">
+            <ul class='nav'>
+                <li class="nav-item" ><input type="file"/></li>
+                <li class="nav-itemc"><input id="upc" type="txt" name="comment"></li>
+                <button id="upload">upload</button>
+                <!--<li class='nav-item'>Icon</li>-->
+            </ul>
+        </div>
     </header>
     <main role='main'>
         <!-- app goes here --> 
-        <div id='large-feed'>
+        <div id='log' style.display="block">
+            <h1 align="center">Please login</h1>
+            <div>
+                USERNAME:<br>
+                <input id="user" type="text" name="user">
+                <br>
+                PASSWORD:<br>
+                <input id="pw" type="password" name="password">
+                <br>
+                <button id='login'>login</button>
+                <br>
+                <button id='register'>register</button>
+            </div>
+        </div>
+        <div id='r' style="display:None;">
+            <h1 align="center">Register for fun</h1>
+            USERNAME:<br>
+            <input id="userr" type="text" name="user">
+            <br>
+            PASSWORD:<br>
+            <input id="pwr" type="text" name="password">
+            <br>
+            EMAIL:<br>
+            <input id="mail" type="text" name="mail"><br>
+            NAME:<br>
+            <input id="na" type="text" name="name">
+            <br>
+            <button id='registerr'>register</button>
+        </div>
+        <div id='in' style="display: none;">
+            <h1 align="center">Welcome to Instacram</h1>
+        </div>
+        <div id="prof" style="display: none;">
+            <h3 align="left">Personal Information</h3>
+            <button id='show_my'>show my files</button>
+            <button id="hide_my">hide</button>
+        </div>
+        <div id="my_file" style="display: none;">
+            <h2 align="center"></h2>
+        </div>    
+        <div id='large-feed' style="display: block;">
             <!-- inject feed data -->
         </div>
     </main>
     <footer>
-        <p>Instacram example</p>
+        <p>Instacram</p>
     </footer>
     <script type="module" src="src/main.js"></script>
 </body>
